@@ -41,7 +41,7 @@ public class TokenString {
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
-        for (Object token : stringTokens) {
+        for (StringToken token : stringTokens) {
             s.append(token.toString());
         }
         return s.toString();
