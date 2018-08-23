@@ -1,8 +1,8 @@
 package org.spoofer.tokenstring;
 
 import org.spoofer.tokenstring.tokens.NamedToken;
-import org.spoofer.tokenstring.tokens.SimpleString;
 import org.spoofer.tokenstring.tokens.StringToken;
+import org.spoofer.tokenstring.tokens.Token;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,20 +28,20 @@ public class TokenString {
     private String tokenClose = DEFAULT_TOKEN_CLOSE;
 
     private String rawString;
-    private List<StringToken> stringTokens = new ArrayList<StringToken>();
+    private List<Token> stringTokens = new ArrayList<Token>();
 
     public TokenString() {
         setTokenString(null);
     }
 
     public TokenString(String tokenString) {
-        setTokenString(rawString);
+        setTokenString(tokenString);
     }
 
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
-        for (StringToken token : stringTokens) {
+        for (Token token : stringTokens) {
             s.append(token.toString());
         }
         return s.toString();
@@ -114,7 +114,7 @@ public class TokenString {
      */
     private NamedToken getToken(String name) {
         NamedToken token = null;
-        for (StringToken stringToken : stringTokens) {
+        for (Token stringToken : stringTokens) {
             if (stringToken instanceof NamedToken) {
                 NamedToken namedToken = (NamedToken) stringToken;
                 if (namedToken.getName().equals(name)) {
@@ -141,7 +141,7 @@ public class TokenString {
             if (endPos > startPos) {
                 int leadLen = startPos - index;  // Capture any fixed stringleading upto first token.
                 if (leadLen > 0)
-                    stringTokens.add(new SimpleString(rawString.substring(index, index + leadLen)));
+                    stringTokens.add(new StringToken(rawString.substring(index, index + leadLen)));
 
                 String name = rawString.substring(startPos + getTokenOpen().length(), endPos).trim();
                 stringTokens.add(new NamedToken(name, null));
@@ -156,12 +156,7 @@ public class TokenString {
         }
 
         if (index < rawString.length())
-            stringTokens.add(new SimpleString(rawString.substring(index, rawString.length())));
-    }
-
-    public static String tokenise(String value) {
-        return new StringBuilder().append(DEFAULT_TOKEN_OPEN)
-                .append(value).append(DEFAULT_TOKEN_CLOSE).toString();
+            stringTokens.add(new StringToken(rawString.substring(index, rawString.length())));
     }
 
 }

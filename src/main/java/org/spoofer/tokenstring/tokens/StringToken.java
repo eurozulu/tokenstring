@@ -1,6 +1,14 @@
 package org.spoofer.tokenstring.tokens;
 
-public interface StringToken {
+public class StringToken implements Token {
+    private final String value;
 
-    public String toString();
+    public StringToken(String value) {
+        this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
 }

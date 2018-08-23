@@ -1,6 +1,6 @@
 package org.spoofer.tokenstring.tokens;
 
-public class NamedToken extends SimpleString {
+public class NamedToken extends StringToken {
 
     private Object value;
 
